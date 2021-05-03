@@ -1,0 +1,9 @@
+[submodule "esw"]
+	path = esw
+	url = https://github.com/tmtsoftware/esw.git
+[submodule "sequencer-scripts"]
+	path = sequencer-scripts
+	url = https://github.com/tmtsoftware/sequencer-scripts.git
+[submodule "csw"]
+	path = csw
+	url = https://github.com/tmtsoftware/csw.git
