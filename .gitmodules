@@ -7,3 +7,6 @@
 [submodule "csw"]
 	path = csw
 	url = https://github.com/tmtsoftware/csw.git
+[submodule "esw-ocs-eng-ui"]
+	path = esw-ocs-eng-ui
+	url = https://github.com/tmtsoftware/esw-ocs-eng-ui
