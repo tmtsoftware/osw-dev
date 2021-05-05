@@ -2,3 +2,5 @@
 .ammonite
 .bloop
 target
+.bsp
+.idea
