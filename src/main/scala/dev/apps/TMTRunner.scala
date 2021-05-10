@@ -1,27 +1,39 @@
 package dev.apps
 
 import dev.models.Submodule.{CSW, ESW}
-import dev.utils.Sbt
+import dev.utils.{Logger, Sbt}
+import os.SubProcess
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+object TMTRunner {
+  def main(args: Array[String]): Unit = {
+    lazy val cswServicesOpt = Sbt.run(
+      CSW,
+      "Successfully started Config Service",
+      "csw-services/run start -c"
+    )
 
-object TMTRunner extends App {
-  val cswServices = Sbt.run(CSW, "Server online at", "csw-services/run start -c")
-  val eswServices = Sbt.run(ESW, "Server online at", "esw-services/run start-eng-ui-services")
+    lazy val eswServicesOpt = Sbt.run(
+      ESW,
+      "Successfully started sequence-manager",
+      "esw-services/run start-eng-ui-services"
+    )
 
-  // if any of the process exits, then kill other
-  val f1 = Future {
-    cswServices.join()
-    eswServices.destroyForcibly()
+    cswServicesOpt match {
+      case Some(_) =>
+        eswServicesOpt match {
+          case Some(eswServices) =>
+            eswServices.join()
+            exit("Stopped csw-services, Reason: esw-services terminated.", cswServicesOpt)
+          case None =>
+            exit("Stopped csw-services, Reason: esw-services terminated.", cswServicesOpt)
+        }
+      case None => exit("Failed to start csw-services.")
+    }
   }
 
-  val f2 = Future {
-    eswServices.join()
-    cswServices.destroyForcibly()
+  private def exit(reason: String, process: Option[SubProcess] = None): Unit = {
+    process.foreach(_.destroyForcibly())
+    Logger.logRed(s"[error] $reason")
+    System.exit(1)
   }
-
-  Await.result(f2, Duration.Inf)
-  Await.result(f1, Duration.Inf)
 }
