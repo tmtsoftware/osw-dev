@@ -22,6 +22,8 @@ object Versions {
 
 object VersionGenerator {
   def main(args: Array[String]): Unit = {
+    println(Console.YELLOW)
     println(Versions.printTable)
+    println(Console.RESET)
   }
 }

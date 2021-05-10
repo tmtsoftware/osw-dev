@@ -23,20 +23,20 @@ object Submodule {
     override val name: String          = "esw"
     override val dir: Path             = wd / name
     override val buildProperties: Path = dir / "project" / "build.properties"
-    override def color: String         = Console.MAGENTA
+    override def color: String         = Console.CYAN
   }
 
   object SequencerScripts extends Submodule {
     override val name: String          = "sequencer-scripts"
     override val dir: Path             = wd / name
     override val buildProperties: Path = dir / "project" / "build.properties"
-    override val color: String         = Console.CYAN
+    override val color: String         = Console.BLUE
   }
 
   object OcsEngUi extends Submodule {
     override val name: String          = "esw-ocs-eng-ui"
     override val dir: Path             = wd / name
     override val buildProperties: Path = dir / "project" / "build.properties"
-    override val color: String         = Console.BLUE
+    override val color: String         = Console.MAGENTA
   }
 }

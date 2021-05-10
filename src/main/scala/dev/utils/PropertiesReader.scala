@@ -4,7 +4,7 @@ import java.io.{File, FileReader}
 import java.util.Properties
 import scala.util.Using
 
-case class VersionKeyNotFound(key: String, file: File)
+case class KeyNotFound(key: String, file: File)
     extends Exception(s"$key key not found in file: ${file.toString}")
 
 object PropertiesReader {
@@ -12,6 +12,6 @@ object PropertiesReader {
     Using.resource(new FileReader(file)) { reader =>
       val properties = new Properties()
       properties.load(reader)
-      Option(properties.getProperty(key)).getOrElse(throw VersionKeyNotFound(key, file))
+      Option(properties.getProperty(key)).getOrElse(throw KeyNotFound(key, file))
     }
 }
