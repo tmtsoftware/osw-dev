@@ -1,27 +1,32 @@
+package dev.apps
+
+import dev.models.Submodule.{CSW, ESW}
 import os.SubProcess
+import dev.utils.Logger
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
-object Logger {
-  def log(prefixColor: String, prefix: String, msg: String): Unit =
-    println(s"$prefixColor$prefix | ${Console.RESET}$msg")
-
-  def logGreen(msg: String): Unit = println(s"${Console.GREEN}$msg${Console.RESET}")
-}
-
 object Sbt {
   private val sbt = "sbt"
 
-  def run(cwd: os.Path, waitForOutput: String, prefixColor: String, prefix: String, cmd: String*): SubProcess = {
+  def run(
+      cwd: os.Path,
+      waitForOutput: String,
+      prefixColor: String,
+      prefix: String,
+      cmd: String*
+  ): SubProcess = {
     Logger.logGreen(s"Starting $prefix")
     @volatile var finished = false
     val process =
       os
         .proc(sbt, cmd)
         .spawn(
-          cwd = cwd, stdin = os.Inherit, stderr = os.Inherit,
+          cwd = cwd,
+          stdin = os.Inherit,
+          stderr = os.Inherit,
           stdout = os.ProcessOutput.Readlines { line =>
             Logger.log(prefixColor, prefix, line)
             if (line.contains(waitForOutput)) finished = true
@@ -38,14 +43,10 @@ object Sbt {
   }
 }
 
-object Main extends App {
-  val wd = os.pwd
-  val csw = wd / "csw"
-  val esw = wd / "esw"
-
+object TMTRunner extends App {
   val cswServices =
     Sbt.run(
-      cwd = csw,
+      cwd = CSW.dir,
       waitForOutput = "Server online at",
       prefixColor = Console.YELLOW,
       prefix = "CSW-SERVICES",
@@ -54,7 +55,7 @@ object Main extends App {
 
   val eswServices =
     Sbt.run(
-      cwd = esw,
+      cwd = ESW.dir,
       waitForOutput = "Server online at",
       prefixColor = Console.MAGENTA,
       prefix = "ESW-SERVICES",
