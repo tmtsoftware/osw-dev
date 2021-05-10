@@ -4,18 +4,18 @@ import dev.models.Submodule.{CSW, ESW, SequencerScripts}
 import dev.utils.{Git, PropertiesReader, Tabulator}
 
 object Versions {
-  val EswVersion: String =
+  def eswVersion: String =
     PropertiesReader.read("esw.version", SequencerScripts.buildProperties.toIO).trim
-  val CswVersion: String              = PropertiesReader.read("csw.version", ESW.buildProperties.toIO).trim
-  val SequencerScriptsVersion: String = Git.head(SequencerScripts).trim
+  def cswVersion: String              = PropertiesReader.read("csw.version", ESW.buildProperties.toIO).trim
+  def sequencerScriptsVersion: String = Git.head(SequencerScripts).trim
 
   def printTable: String =
     Tabulator.formatTable(
       List(
         List("Module", "Version"),
-        List(SequencerScripts.name, SequencerScriptsVersion),
-        List(ESW.name, EswVersion),
-        List(CSW.name, CswVersion)
+        List(SequencerScripts.name, sequencerScriptsVersion),
+        List(ESW.name, eswVersion),
+        List(CSW.name, cswVersion)
       )
     )
 }
