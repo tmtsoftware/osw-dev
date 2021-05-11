@@ -10,9 +10,9 @@ object Git {
       .call(stdout = os.ProcessOutput.Readlines(Logger.log(submodule, _)))
   }
 
-  def checkout(sha: String, submodule: Submodule): CommandResult = {
+  def checkout(submodule: Submodule, sha: String): CommandResult = {
     val command = Seq("git", "-C", submodule.name, "checkout", sha)
-    println(s"[$submodule] " + command.mkString(" "))
+    Logger.log(submodule, command.mkString(" "))
     os.proc(command).call(stdout = os.ProcessOutput.Readlines(Logger.log(submodule, _)))
   }
 

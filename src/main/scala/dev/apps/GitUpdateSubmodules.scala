@@ -7,7 +7,7 @@ object GitUpdateSubmodules {
   def main(args: Array[String]): Unit = {
     Git.pull(SequencerScripts)
     Git.pull(OcsEngUi)
-    Git.checkout(Versions.eswVersion, ESW)
-    Git.checkout(Versions.cswVersion, CSW)
+    Git.checkout(ESW, Versions.eswVersion)
+    Git.checkout(CSW, Versions.cswVersion)
   }
 }
