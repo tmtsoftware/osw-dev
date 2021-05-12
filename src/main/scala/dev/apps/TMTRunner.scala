@@ -1,6 +1,6 @@
 package dev.apps
 
-import caseapp.{AppName, CommandApp, HelpMessage, ProgName, RemainingArgs}
+import caseapp.{CommandApp, ExtraName, HelpMessage, RemainingArgs}
 import dev.utils.Git
 
 sealed trait Command
@@ -9,7 +9,7 @@ sealed trait Command
 case object Init extends Command
 
 @HelpMessage("Starts csw-services and esw eng-ui-services")
-case class Start(live: Boolean = false) extends Command
+case class Start(@ExtraName("l") live: Boolean = false) extends Command
 
 @HelpMessage("Updates all submodules to their correct versions")
 case object UpdateSubmodules extends Command
