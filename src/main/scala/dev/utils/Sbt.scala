@@ -6,17 +6,12 @@ import os.SubProcess
 object Sbt {
   private val sbt = "sbt"
 
-  def run(
-      submodule: Submodule,
-      waitForOutput: String,
-      cmd: String*
-  ): Option[SubProcess] = {
+  def run(submodule: Submodule, waitForOutput: String, cmd: String*): Option[SubProcess] = {
     Logger.logGreen(s"========= Starting ${submodule.name}-services =========")
     @volatile var finished = false
 
     val process =
-      os
-        .proc(sbt, cmd)
+      os.proc(sbt, cmd)
         .spawn(
           env = Environment.get,
           cwd = submodule.dir,

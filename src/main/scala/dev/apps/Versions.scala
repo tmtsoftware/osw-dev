@@ -12,10 +12,10 @@ object Versions {
   def tabulatedVersions: String =
     Tabulator.formatTable(
       List(
-        List("Module", "Version"),
-        List(SequencerScripts.name, sequencerScriptsVersion),
-        List(ESW.name, eswVersion),
-        List(CSW.name, cswVersion)
+        List("Module", "Branch", "Version"),
+        List(SequencerScripts.name, SequencerScripts.branch, sequencerScriptsVersion),
+        List(ESW.name, ESW.branch, eswVersion),
+        List(CSW.name, CSW.branch, cswVersion)
       )
     )
 
