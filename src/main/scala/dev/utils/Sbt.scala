@@ -5,8 +5,6 @@ import os.SubProcess
 
 object Sbt {
   private val sbt = "sbt"
-  // FIXME make it os specific
-  private val env = Map("INTERFACE_NAME" -> "en0", "AAS_INTERFACE_NAME" -> "en0")
 
   def run(
       submodule: Submodule,
@@ -20,7 +18,7 @@ object Sbt {
       os
         .proc(sbt, cmd)
         .spawn(
-          env = env,
+          env = Environment.get,
           cwd = submodule.dir,
           stdout = os.ProcessOutput.Readlines { line =>
             Logger.log(submodule, line)
@@ -30,6 +28,6 @@ object Sbt {
 
     sys.addShutdownHook(process.destroyForcibly())
     while (!finished && process.isAlive()) Thread.sleep(100)
-    if(process.isAlive()) Some(process) else None
+    if (process.isAlive()) Some(process) else None
   }
 }
