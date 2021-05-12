@@ -5,7 +5,7 @@ import os.CommandResult
 
 object Git {
   def checkoutBranch(submodule: Submodule): CommandResult =
-    os.proc("git", "-C", submodule.name, "checkout", "origin", submodule.branch)
+    os.proc("git", "-C", submodule.name, "checkout", submodule.branch)
       .call(stdout = os.ProcessOutput.Readlines(Logger.log(submodule, _)))
 
   def pull(submodule: Submodule): CommandResult = {
