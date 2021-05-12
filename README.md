@@ -27,4 +27,7 @@ This repository contains following three applications
 
 1. Execute `sbt` command to enter into sbt console
 1. Execute `runMain dev.apps.GitUpdateSubmodules` command to update project
-1. Execute `runMain dev.apps.TMTRunner` command to start CSW and ESW services
+1. **TMTRunner**
+   1. Execute `runMain dev.apps.TMTRunner` command to start CSW and ESW services
+   1. If you want to make changes to script locally then execute `runMain "dev.apps.TMTRunner live"`,
+      this uses `0.1.0-SNAPSHOT` version of `sequencer-scripts` repo
