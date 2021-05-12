@@ -1,44 +1,28 @@
 package dev.apps
 
-import dev.models.Submodule.{CSW, ESW}
-import dev.utils.{Logger, Sbt}
-import os.SubProcess
+import caseapp.{AppName, CommandApp, HelpMessage, ProgName, RemainingArgs}
 
-// TODO convert to case app?
-object TMTRunner {
-  def main(args: Array[String]): Unit = {
-    val startEngUi =
-      if (args.headOption.contains("live")) "start-eng-ui-services --scripts-version 0.1.0-SNAPSHOT"
-      else "start-eng-ui-services"
+@AppName("TMTRunner")
+@ProgName("TMTRunner")
+sealed trait Command
 
-    lazy val cswServicesOpt = Sbt.run(
-      CSW,
-      "Successfully started Config Service",
-      "csw-services/run start -c"
-    )
+@HelpMessage("Starts csw-services and esw eng-ui-services")
+case class Start(live: Boolean = false) extends Command
 
-    lazy val eswServicesOpt = Sbt.run(
-      ESW,
-      "Successfully started sequence-manager",
-      s"esw-services/run $startEngUi"
-    )
+@HelpMessage("Updates all submodules to their correct versions")
+case object UpdateSubmodules extends Command
 
-    cswServicesOpt match {
-      case Some(_) =>
-        eswServicesOpt match {
-          case Some(eswServices) =>
-            eswServices.join()
-            exit("Stopped csw-services, Reason: esw-services terminated.", cswServicesOpt)
-          case None =>
-            exit("Stopped csw-services, Reason: esw-services terminated.", cswServicesOpt)
-        }
-      case None => exit("Failed to start csw-services.")
-    }
-  }
+@HelpMessage("Prints versions compatibility table")
+case object PrintVersions extends Command
 
-  private def exit(reason: String, process: Option[SubProcess] = None): Unit = {
-    process.foreach(_.destroyForcibly())
-    Logger.logRed(s"[error] $reason")
-    System.exit(1)
+object TMTRunner extends CommandApp[Command] {
+  override def appName: String    = getClass.getSimpleName.dropRight(1)
+  override def progName: String   = "tmt-runner"
+  override def appVersion: String = "0.1.0-SNAPSHOT"
+
+  def run(command: Command, args: RemainingArgs): Unit = command match {
+    case Start(live)      => ServicesLauncher.launch(live)
+    case UpdateSubmodules => GitUpdateSubmodules.update()
+    case PrintVersions    => Versions.prettyPrint()
   }
 }

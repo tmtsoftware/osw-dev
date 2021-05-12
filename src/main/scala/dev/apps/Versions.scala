@@ -9,7 +9,7 @@ object Versions {
   def cswVersion: String              = PropertiesReader.read("csw.version", ESW.buildProperties.toIO).trim
   def sequencerScriptsVersion: String = Git.head(SequencerScripts).trim
 
-  def printTable: String =
+  def tabulatedVersions: String =
     Tabulator.formatTable(
       List(
         List("Module", "Version"),
@@ -18,12 +18,11 @@ object Versions {
         List(CSW.name, cswVersion)
       )
     )
-}
 
-object VersionGenerator {
-  def main(args: Array[String]): Unit = {
+  def prettyPrint(): Unit = {
     println(Console.YELLOW)
-    println(Versions.printTable)
+    println(tabulatedVersions)
     println(Console.RESET)
   }
+
 }
