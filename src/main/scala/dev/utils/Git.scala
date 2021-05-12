@@ -4,6 +4,9 @@ import dev.models.Submodule
 import os.CommandResult
 
 object Git {
+  def initSubmodules(): CommandResult =
+    os.proc("git", "submodule", "update", "--init", "--recursive").call(stdout = os.Inherit)
+
   def checkoutBranch(submodule: Submodule): CommandResult =
     os.proc("git", "-C", submodule.name, "checkout", submodule.branch)
       .call(stdout = os.ProcessOutput.Readlines(Logger.log(submodule, _)))

@@ -10,13 +10,18 @@ First time users should run following commands, this will clone the repo and fet
 ```bash 
 git clone https://github.com/kpritam/tmt-mono.git
 cd tmt-mono
+
 git submodule update --init --recursive
+# Or alternatively run
+sbt run init
 ```
 
 ## Overview
 
 This repository contains `TMTRunner` application which supports following three commands
 
+1. **init** - Initializes all the submodules. Run this command only once when you clone this repo for the first time.
+   Ignore this command if you have followed [Initialize](#Initialize) section. 
 1. **update-submodules** - Updates all the projects with correct compatible versions
 1. **start** - Starts CSW and ESW services. Internally this executes following two commands:
     1. `bash csw-services/run start -c`
