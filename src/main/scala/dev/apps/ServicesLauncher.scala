@@ -6,9 +6,9 @@ import os.SubProcess
 
 object ServicesLauncher {
   def launch(live: Boolean): Unit = {
-    val startEngUi =
-      if (live) "start-eng-ui-services --scripts-version 0.1.0-SNAPSHOT"
-      else "start-eng-ui-services"
+    val scriptVersion =
+      if (live) "0.1.0-SNAPSHOT"
+      else Versions.sequencerScriptsVersion
 
     lazy val cswServicesOpt = Sbt.run(
       CSW,
@@ -19,7 +19,7 @@ object ServicesLauncher {
     lazy val eswServicesOpt = Sbt.run(
       ESW,
       "Successfully started sequence-manager",
-      s"esw-services/run $startEngUi"
+      s"esw-services/run start-eng-ui-services --scripts-version $scriptVersion"
     )
 
     cswServicesOpt match {
