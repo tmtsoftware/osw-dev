@@ -19,7 +19,7 @@ object ServicesLauncher {
     lazy val eswServicesOpt = Sbt.run(
       ESW,
       "Successfully started sequence-manager",
-      s"esw-services/run start-eng-ui-services --scripts-version $scriptVersion"
+      s"esw-services/run start-eng-ui-services --scripts-version $scriptVersion --esw-version ${Versions.eswVersion}"
     )
 
     cswServicesOpt match {

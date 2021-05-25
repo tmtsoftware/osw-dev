@@ -19,9 +19,9 @@ object Git {
   }
 
   def checkout(submodule: Submodule, sha: String): CommandResult = {
+    pull(submodule)
     val command = Seq("git", "-C", submodule.name, "checkout", sha)
     Logger.log(submodule, command.mkString(" "))
-    checkoutBranch(submodule)
     os.proc(command).call(stdout = os.ProcessOutput.Readlines(Logger.log(submodule, _)))
   }
 
