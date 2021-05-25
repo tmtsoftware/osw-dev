@@ -1,4 +1,4 @@
-# TMT-Mono
+# osw-dev 
 
 This repo contains submodules for *csw*, *esw*, *sequencer-scripts* and *esw-ocs-eng-ui*.
 Goal of this repo is to maintain version compatibility between these repos.
@@ -8,8 +8,8 @@ Goal of this repo is to maintain version compatibility between these repos.
 First time users should run following commands, this will clone the repo and fetch submodules
 
 ```bash 
-git clone https://github.com/kpritam/tmt-mono.git
-cd tmt-mono
+git clone https://github.com/tmtsoftware/osw-dev.git
+cd osw-dev
 
 git submodule update --init --recursive
 # Or alternatively run

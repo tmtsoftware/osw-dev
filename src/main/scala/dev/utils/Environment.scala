@@ -8,7 +8,7 @@ object Environment {
 
   val InterfaceName: String    = env.getOrElse(InterfaceNameKey, "en0")
   val AasInterfaceName: String = env.getOrElse(AasInterfaceNameKey, "en0")
-  val TmtLogHome: String       = env.getOrElse(TmtLogHomeKey, "/tmp/tmt-mono")
+  val TmtLogHome: String       = env.getOrElse(TmtLogHomeKey, "/tmp/osw-dev")
 
   val get =
     Map(
