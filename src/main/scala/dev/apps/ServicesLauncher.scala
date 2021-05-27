@@ -5,11 +5,7 @@ import dev.utils.{Logger, Sbt}
 import os.SubProcess
 
 object ServicesLauncher {
-  def launch(live: Boolean): Unit = {
-    val scriptVersion =
-      if (live) "0.1.0-SNAPSHOT"
-      else Versions.sequencerScriptsVersion
-
+  def launch(): Unit = {
     lazy val cswServicesOpt = Sbt.run(
       CSW,
       "Successfully started Config Service",
@@ -19,7 +15,7 @@ object ServicesLauncher {
     lazy val eswServicesOpt = Sbt.run(
       ESW,
       "Successfully started sequence-manager",
-      s"esw-services/run start-eng-ui-services --scripts-version $scriptVersion --esw-version ${Versions.eswVersion}"
+      s"esw-services/run start-eng-ui-services --scripts-version ${Versions.sequencerScriptsVersion} --esw-version ${Versions.eswVersion}"
     )
 
     cswServicesOpt match {

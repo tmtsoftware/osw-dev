@@ -10,10 +10,7 @@ First time users should run following commands, this will clone the repo and fet
 ```bash 
 git clone https://github.com/tmtsoftware/osw-dev.git
 cd osw-dev
-
 git submodule update --init --recursive
-# Or alternatively run
-sbt run init
 ```
 
 ## Overview
@@ -32,7 +29,4 @@ This repository contains `TMTRunner` application which supports following three 
 
 1. Execute `sbt` command to enter into sbt console
 1. Execute `run update-submodules` command to update project
-1. **TMTRunner**
-   1. Execute `run start` command to start CSW and ESW services
-   1. If you want to make changes to script locally then execute `run start --live"`,
-      this uses `0.1.0-SNAPSHOT` version of `sequencer-scripts` repo
+1. Execute `run start` command to start CSW and ESW services

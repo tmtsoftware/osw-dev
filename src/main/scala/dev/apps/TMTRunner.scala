@@ -1,6 +1,6 @@
 package dev.apps
 
-import caseapp.{CommandApp, ExtraName, HelpMessage, RemainingArgs}
+import caseapp.{CommandApp, HelpMessage, RemainingArgs}
 import dev.utils.Git
 
 sealed trait Command
@@ -9,7 +9,7 @@ sealed trait Command
 case object Init extends Command
 
 @HelpMessage("Starts csw-services and esw eng-ui-services")
-case class Start(@ExtraName("l") live: Boolean = false) extends Command
+case object Start extends Command
 
 @HelpMessage("Updates all submodules to their correct versions")
 case object UpdateSubmodules extends Command
@@ -26,6 +26,6 @@ object TMTRunner extends CommandApp[Command] {
     case Init             => Git.initSubmodules()
     case UpdateSubmodules => GitUpdateSubmodules.update()
     case PrintVersions    => Versions.prettyPrint()
-    case Start(live)      => ServicesLauncher.launch(live)
+    case Start            => ServicesLauncher.launch()
   }
 }
