@@ -11,7 +11,7 @@ object GitUpdateSubmodules {
 
   def update(): Unit = {
     checkoutSequencerScripts()
-    Git.checkout(ESW, Versions.eswVersion)
-    Git.checkout(CSW, Versions.cswVersion)
+    Git.checkout(ESW, AppConfig.EswVersion)
+    Git.checkout(CSW, AppConfig.CswVersion)
   }
 }

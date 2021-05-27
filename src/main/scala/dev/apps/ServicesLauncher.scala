@@ -1,7 +1,7 @@
 package dev.apps
 
 import dev.models.Submodule.{CSW, ESW}
-import dev.utils.{Logger, Sbt}
+import dev.utils.{AppConfig, Logger, Sbt}
 import os.SubProcess
 
 object ServicesLauncher {
@@ -15,7 +15,7 @@ object ServicesLauncher {
     lazy val eswServicesOpt = Sbt.run(
       ESW,
       "Successfully started sequence-manager",
-      s"esw-services/run start-eng-ui-services --scripts-version ${Versions.sequencerScriptsVersion} --esw-version ${Versions.eswVersion}"
+      s"esw-services/run start-eng-ui-services --scripts-version ${Versions.scriptsSha} --esw-version ${AppConfig.EswVersion}"
     )
 
     cswServicesOpt match {

@@ -25,7 +25,7 @@ object TMTRunner extends CommandApp[Command] {
   def run(command: Command, args: RemainingArgs): Unit = command match {
     case Init             => Git.initSubmodules()
     case UpdateSubmodules => GitUpdateSubmodules.update()
-    case PrintVersions    => Versions.prettyPrint()
+    case PrintVersions    => Versions.printTabulated()
     case Start            => ServicesLauncher.launch()
   }
 }

@@ -21,12 +21,17 @@ This repository contains `TMTRunner` application which supports following three 
    Ignore this command if you have followed [Initialize](#Initialize) section. 
 1. **update-submodules** - Updates all the projects with correct compatible versions
 1. **start** - Starts CSW and ESW services. Internally this executes following two commands:
-    1. `bash csw-services/run start -c`
-    1. `bash esw-services/run start-eng-ui-services`
+    1. `sbt csw-services/run start -c`
+    1. `sbt esw-services/run start-eng-ui-services`
 1. **print-versions** - Prints version compatibility table for `sequencer-scripts`, `esw` and `csw` repo
 
 ## Dev Workflow
 
+1. Execute `git pull --rebase` command to fetch the latest changes of `osw-dev`
 1. Execute `sbt` command to enter into sbt console
 1. Execute `run update-submodules` command to update project
 1. Execute `run start` command to start CSW and ESW services
+
+## TODOS
+
+1. Automatically detect `INTERFACE_NAME` and `AAS_INTERFACE_NAME`. Currently, it defaults to `en0` if not set explicitly by user. 
