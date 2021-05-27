@@ -1,11 +1,16 @@
 package dev.apps
 
 import dev.models.Submodule.{CSW, ESW, SequencerScripts}
-import dev.utils.Git
+import dev.utils.{AppConfig, Git}
 
 object GitUpdateSubmodules {
+  private def checkoutSequencerScripts() =
+    if (AppConfig.ScriptsVersion == "master" | AppConfig.ScriptsVersion == "main")
+      Git.pull(SequencerScripts)
+    else Git.checkout(SequencerScripts, AppConfig.ScriptsVersion)
+
   def update(): Unit = {
-    Git.pull(SequencerScripts)
+    checkoutSequencerScripts()
     Git.checkout(ESW, Versions.eswVersion)
     Git.checkout(CSW, Versions.cswVersion)
   }
