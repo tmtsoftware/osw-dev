@@ -1,11 +1,13 @@
 package dev.apps
 
 import dev.models.Submodule.{CSW, ESW}
-import dev.utils.{AppConfig, Logger, Sbt}
+import dev.utils.{AppConfig, Logger, ProcessUtils, Sbt}
 import os.SubProcess
 
 object ServicesLauncher {
   def launch(): Unit = {
+    ProcessUtils.cleanupOldProcesses()
+
     lazy val cswServicesOpt = Sbt.run(
       CSW,
       "Successfully started Config Service",
